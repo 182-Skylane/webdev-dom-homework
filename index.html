@@ -113,6 +113,24 @@
     commentInput.value = "";
   });
 
+  document.querySelectorAll(".like-button").forEach(button => {
+    button.addEventListener("click", () => {
+      const likesCounter = button.previousElementSibling;
+      let likes = parseInt(likesCounter.textContent);
+
+      if (button.classList.contains("-active-like")) {
+        likes--; // убираем лайк
+        button.classList.remove("-active-like");
+      } else {
+        likes++; // добавляем лайк
+        button.classList.add("-active-like");
+      }
+
+      likesCounter.textContent = likes; // обновляем счетчик
+    });
+  });
+
+
   console.log("It works!");
 </script>
 
