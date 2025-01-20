@@ -57,6 +57,60 @@
 
 <script>
   // Код писать здесь
+
+  let comments = [
+    {
+      author: "Глеб Фокин",
+      date: "12.02.22 12:18",
+      text: "Это будет первый комментарий на этой странице",
+      likes: 3,
+      isLiked: false
+    },
+    {
+      author: "Варвара Н.",
+      date: "13.02.22 19:22",
+      text: "Мне нравится как оформлена эта страница! ❤️",
+      likes: 75,
+      isLiked: true
+    }
+  ];
+
+  function renderComments() {
+    const commentList = document.querySelector(".comments");
+    commentList.innerHTML = "";
+
+    comments.forEach((comment, index) => {
+      const li = document.createElement("li");
+      li.classList.add("comment");
+
+      li.innerHTML = `
+        <div class="comment-header">
+          <div>${comment.author}</div>
+          <div>${comment.date}</div>
+        </div>
+        <div class="comment-body">
+          <div class="comment-text">
+            ${comment.text}
+          </div>
+        </div>
+        <div class="comment-footer">
+          <div class="likes">
+            <span class="likes-counter">${comment.likes}</span>
+            <button class="like-button ${comment.isLiked ? '-active-like' : ''}"></button>
+          </div>
+        </div>
+      `;
+
+      li.querySelector(".like-button").addEventListener("click", () => {
+        comment.isLiked = !comment.isLiked;
+        comment.likes += comment.isLiked ? 1 : -1;
+        renderComments();
+      });
+
+      commentList.appendChild(li);
+    });
+  }
+
   document.querySelector(".add-form-button").addEventListener("click", () => {
     const nameInput = document.querySelector(".add-form-name");
     const commentInput = document.querySelector(".add-form-text");
@@ -68,13 +122,13 @@
 
     if (nameInput.value.trim() === "") {
       nameInput.style.backgroundColor = "red";
-      nameInput.style.color = "white";
+      nameInput.style.color = "lightgreen";
       valid = false;
     }
 
     if (commentInput.value.trim() === "") {
       commentInput.style.backgroundColor = "red";
-      commentInput.style.color = "white";
+      commentInput.style.color = "lightgreen";
       valid = false;
     }
 
@@ -82,54 +136,27 @@
       return;
     }
 
-    const commentList = document.querySelector(".comments");
-    const li = document.createElement("li");
-    li.classList.add("comment");
-
     const now = new Date();
-    const dateString = `${now.getDate().toString().padStart(2, '0')}.${(now.getMonth() + 1).toString().padStart(2, '0')}.${now.getFullYear().toString().slice(2)} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+    const dateString = now.getDate().toString().padStart(2, '0') + '.' +
+      (now.getMonth() + 1).toString().padStart(2, '0') + '.' +
+      now.getFullYear().toString().slice(2) + ' ' +
+      now.getHours().toString().padStart(2, '0') + ':' +
+      now.getMinutes().toString().padStart(2, '0');
 
-    li.innerHTML = `
-    <div class="comment-header">
-      <div>${nameInput.value}</div>
-      <div>${dateString}</div>
-    </div>
-    <div class="comment-body">
-      <div class="comment-text">
-        ${commentInput.value}
-      </div>
-    </div>
-    <div class="comment-footer">
-      <div class="likes">
-        <span class="likes-counter">0</span>
-        <button class="like-button"></button>
-      </div>
-    </div>
-  `;
+    comments.push({
+      author: nameInput.value,
+      date: dateString,
+      text: commentInput.value,
+      likes: 0,
+      isLiked: false
+    });
 
-    commentList.appendChild(li);
-
+    renderComments();
     nameInput.value = "";
     commentInput.value = "";
   });
 
-  document.querySelectorAll(".like-button").forEach(button => {
-    button.addEventListener("click", () => {
-      const likesCounter = button.previousElementSibling;
-      let likes = parseInt(likesCounter.textContent);
-
-      if (button.classList.contains("-active-like")) {
-        likes--; // убираем лайк
-        button.classList.remove("-active-like");
-      } else {
-        likes++; // добавляем лайк
-        button.classList.add("-active-like");
-      }
-
-      likesCounter.textContent = likes; // обновляем счетчик
-    });
-  });
-
+  renderComments();
 
   console.log("It works!");
 </script>
