@@ -56,18 +56,17 @@
 </body>
 
 <script>
-  // Код писать здесь
 
   let comments = [
     {
-      author: "Глеб Фокин",
+      name: "Глеб Фокин",
       date: "12.02.22 12:18",
       text: "Это будет первый комментарий на этой странице",
       likes: 3,
       isLiked: false
     },
     {
-      author: "Варвара Н.",
+      name: "Варвара Н.",
       date: "13.02.22 19:22",
       text: "Мне нравится как оформлена эта страница! ❤️",
       likes: 75,
@@ -84,22 +83,29 @@
       li.classList.add("comment");
 
       li.innerHTML = `
-        <div class="comment-header">
-          <div>${comment.author}</div>
-          <div>${comment.date}</div>
+      <div class="comment-header">
+        <div>${comment.name}</div>
+        <div>${comment.date}</div>
+      </div>
+      <div class="comment-body">
+        <div class="comment-text">
+          ${comment.text}
         </div>
-        <div class="comment-body">
-          <div class="comment-text">
-            ${comment.text}
-          </div>
+      </div>
+      <div class="comment-footer">
+        <div class="likes">
+          <span class="likes-counter">${comment.likes}</span>
+          <button class="like-button ${comment.isLiked ? '-active-like' : ''}"></button>
         </div>
-        <div class="comment-footer">
-          <div class="likes">
-            <span class="likes-counter">${comment.likes}</span>
-            <button class="like-button ${comment.isLiked ? '-active-like' : ''}"></button>
-          </div>
-        </div>
-      `;
+      </div>
+    `;
+
+      li.addEventListener("click", (event) => {
+        if (!event.target.classList.contains('like-button')) {
+          const commentInput = document.querySelector(".add-form-text");
+          commentInput.value = `> ${comment.name} : ${comment.text} < \n`;
+        }
+      });
 
       li.querySelector(".like-button").addEventListener("click", () => {
         comment.isLiked = !comment.isLiked;
@@ -136,6 +142,12 @@
       return;
     }
 
+    const sanitizeHtml = (input) => {
+      return input
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+    };
+
     const now = new Date();
     const dateString = now.getDate().toString().padStart(2, '0') + '.' +
       (now.getMonth() + 1).toString().padStart(2, '0') + '.' +
@@ -144,9 +156,9 @@
       now.getMinutes().toString().padStart(2, '0');
 
     comments.push({
-      author: nameInput.value,
+      name: sanitizeHtml(nameInput.value),
       date: dateString,
-      text: commentInput.value,
+      text: sanitizeHtml(commentInput.value),
       likes: 0,
       isLiked: false
     });
@@ -159,6 +171,7 @@
   renderComments();
 
   console.log("It works!");
+
 </script>
 
 </html>
