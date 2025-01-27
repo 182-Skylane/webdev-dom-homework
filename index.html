@@ -103,7 +103,7 @@
       li.addEventListener("click", (event) => {
         if (!event.target.classList.contains('like-button')) {
           const commentInput = document.querySelector(".add-form-text");
-          commentInput.value = `> ${comment.name} : ${comment.text} < \n`;
+          commentInput.value = `${comment.name} : ${comment.text}\n`;
         }
       });
 
