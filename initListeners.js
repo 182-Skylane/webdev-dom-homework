@@ -1,5 +1,7 @@
 import { comments } from './comments.js'
 import { sanitizeHtml } from './sanitizeHtml.js'
+import { dateString } from './commentDate.js'
+import { renderComments } from './renderComments.js'
 
 export const initLikeListeners = (renderComments) => {
     const likeButtons = document.querySelectorAll('.like-button')
@@ -48,7 +50,7 @@ export const initAddCommentListener = () => {
 
         const newComment = {
             name: sanitizeHtml(name.value),
-            date: new Date(),
+            date: dateString,
             text: sanitizeHtml(text.value),
             likes: 0,
             isLiked: false,
