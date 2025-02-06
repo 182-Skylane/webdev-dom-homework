@@ -1,42 +1,34 @@
-export function renderComments() {
-    const commentList = document.querySelector('.comments')
-    commentList.innerHTML = ''
+import { comments } from './comments.js'
+import { initLikeListeners, initReplyListeners } from './initListeners.js'
+import { dateString } from './commentDate.js'
 
-    comments.forEach((comment) => {
-        const li = document.createElement('li')
-        li.classList.add('comment')
+export const renderComments = () => {
+    const list = document.querySelector('.comments')
 
-        li.innerHTML = `
-      <div class="comment-header">
+    list.innerHTML = comments
+        .map((comment, index) => {
+            return `
+  <li class="comment" data-index="${index}">
+    <div class="comment-header">
         <div>${comment.name}</div>
-        <div>${comment.date}</div>
+        <div>${dateString}</div>
       </div>
-      <div class="comment-body">
+    <div class="comment-body">
         <div class="comment-text">
-          ${comment.text}
-        </div>
+        ${comment.text}
       </div>
-      <div class="comment-footer">
-        <div class="likes">
-          <span class="likes-counter">${comment.likes}</span>
-          <button class="like-button ${comment.isLiked ? '-active-like' : ''}"></button>
-        </div>
+    </div>
+    <div class="comment-footer">
+      <div class="likes">
+        <span class="likes-counter">${comment.likes}</span>
+        <button data-index="${index}" class="like-button ${comment.isLiked ? '-active-like' : ''}"></button>
       </div>
-    `
-
-        li.addEventListener('click', (event) => {
-            if (!event.target.classList.contains('like-button')) {
-                const commentInput = document.querySelector('.add-form-text')
-                commentInput.value = `${comment.name} : ${comment.text}\n`
-            }
+    </div>
+  </li>
+      `
         })
+        .join('')
 
-        li.querySelector('.like-button').addEventListener('click', () => {
-            comment.isLiked = !comment.isLiked
-            comment.likes += comment.isLiked ? 1 : -1
-            renderComments()
-        })
-
-        commentList.appendChild(li)
-    })
+    initLikeListeners(renderComments)
+    initReplyListeners()
 }
