@@ -31,7 +31,7 @@ export const initReplyListeners = () => {
     for (const commentElement of commentElements) {
         commentElement.addEventListener('click', () => {
             const currentComment = comments[commentElement.dataset.index]
-            text.value = `${currentComment.name}: ${currentComment.text}`
+            text.value = `${currentComment.name}: ${currentComment.text} \n`
         })
     }
 }
