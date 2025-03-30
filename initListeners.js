@@ -69,8 +69,8 @@ export const initAddCommentListener = (renderComments) => {
                 alert('Нет интернета, попробуйте снова')
             }
 
-            if (error.message === 'Ошибка сервера') {
-                alert('Ошибка сервера')
+            if (error.message === 'Сервер не отвечает') {
+                alert('Сервер не отвечает')
             }
 
             if (error.message === 'Неверный запрос') {

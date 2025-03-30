@@ -26,11 +26,12 @@ export const postComment = (text, name) => {
         body: JSON.stringify({
             text,
             name,
+            forceError: false,
         }),
     })
     .then((response) => {
         if (response.status === 500) {
-            throw new Error('Ошибка сервера')
+            throw new Error('Сервер не отвечает')
         }
 
         if (response.status === 400) {
