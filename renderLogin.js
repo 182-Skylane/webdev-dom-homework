@@ -1,6 +1,6 @@
 import { login, setToken, setName } from './api.js'
-import { renderComments } from './renderComments.js'
 import { fetchAndRenederComments } from './index.js'
+import { renderReg } from './renderReg.js'
 
 export const renderLogin = () => {
     const container = document.querySelector('.container')
@@ -16,7 +16,7 @@ export const renderLogin = () => {
         required
       /input>
       <input
-        type='text'
+        type='password'
         class='add-form-name'
         placeholder='Введите пароль'
         id='password'
@@ -31,6 +31,10 @@ export const renderLogin = () => {
      </section>
     `
     container.innerHTML = loginHtml
+
+    document.querySelector('.registry').addEventListener('click', () => {
+        renderReg()
+    })
 
     const loginEl = document.querySelector('#login')
     const passwordEl = document.querySelector('#password')
