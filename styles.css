@@ -137,3 +137,51 @@ body {
 .input-error {
   background-color: red;
 }
+
+.link-login {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.add-form-button-main {
+  margin-top: 24px;
+  font-size: 24px;
+  padding: 10px 20px;
+  background-color: #bcec30;
+  border: none;
+  border-radius: 18px;
+  cursor: pointer;
+  width: 90%;
+}
+
+.add-form-name {
+  display: flex;
+  gap: 16px;
+  width: 90%;
+  align-self: center;
+
+}
+
+.add-form-button-link {
+  display: flex;
+  align-self: center;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+
+}
+
+.add-form-registry {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: none;
+}
+
+.registry {
+  margin-top: 16px;
+}
+
+.add-form-name {
+  margin-top: 14px;
+}
