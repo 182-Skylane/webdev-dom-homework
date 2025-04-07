@@ -3,9 +3,9 @@ import { fetchAndRenederComments } from './index.js'
 import { renderLogin } from './renderLogin.js'
 
 export const renderReg = () => {
-    const container = document.querySelector('.container')
+  const container = document.querySelector('.container')
 
-    const loginHtml = `
+  const loginHtml = `
      <section class='add-form'>
         <h1>Форма регистрации</h1>
         <input
@@ -37,27 +37,33 @@ export const renderReg = () => {
       </fieldset>
      </section>
     `
-    container.innerHTML = loginHtml
+  container.innerHTML = loginHtml
 
-    document.querySelector('.entry').addEventListener('click', () => {
-        renderLogin()
-    })
+  document.querySelector('.entry').addEventListener('click', () => {
+    renderLogin()
+  })
 
-    const nameEl = document.querySelector('#name')
-    const loginEl = document.querySelector('#login')
-    const passwordEl = document.querySelector('#password')
-    const submitButtonEl = document.querySelector('.button-main')
+  const nameEl = document.querySelector('#name')
+  const loginEl = document.querySelector('#login')
+  const passwordEl = document.querySelector('#password')
+  const regButtonEl = document.querySelector('.button-main')
 
-    submitButtonEl.addEventListener('click', () => {
-        registration(nameEl.value, loginEl.value, passwordEl.value)
-            .then((response) => {
-                return response.json()
-            })
-            .then((data) => {
-                setToken(data.user.token)
-                setName(data.user.name)
-                fetchAndRenederComments()
-            })
-    })
+  regButtonEl.addEventListener('click', () => {
+    registration(nameEl.value, loginEl.value, passwordEl.value)
+      .then((response) => {
+        return response.json()
+      })
+      .then((data) => {
+        setToken(data.user.token)
+        setName(data.user.name)
+        fetchAndRenederComments()
+      })
+
+    if (!nameEl.value || !loginEl.value || !passwordEl.value) {
+      console.error('заполните форму регистрации')
+      alert('Заполните форму регистрации')
+      return
+    }
+  })
 
 }

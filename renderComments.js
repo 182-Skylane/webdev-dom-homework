@@ -1,7 +1,6 @@
 import { comments } from './comments.js'
 import { name, token } from './api.js'
 import { initAddCommentListener, initLikeListeners, initReplyListeners } from './initListeners.js'
-import { dateString } from './commentDate.js'
 import { renderLogin } from './renderLogin.js'
 
 
@@ -15,7 +14,13 @@ export const renderComments = () => {
   <li class="comment" data-index="${index}">
     <div class="comment-header">
         <div>${comment.name}</div>
-        <div>${dateString}</div>
+        <div>${new Date(comment.date).toLocaleString('ru-RU', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      })}</div>
       </div>
     <div class="comment-body">
         <div class="comment-text">
@@ -75,6 +80,7 @@ export const renderComments = () => {
   } else {
     document.querySelector('.link-login').addEventListener('click',
       () => {
+
         renderLogin()
       })
   }

@@ -3,9 +3,9 @@ import { fetchAndRenederComments } from './index.js'
 import { renderReg } from './renderReg.js'
 
 export const renderLogin = () => {
-    const container = document.querySelector('.container')
+  const container = document.querySelector('.container')
 
-    const loginHtml = `
+  const loginHtml = `
      <section class='add-form'>
         <h1>Форма входа</h1>
       <input
@@ -30,26 +30,36 @@ export const renderLogin = () => {
       </fieldset>
      </section>
     `
-    container.innerHTML = loginHtml
+  container.innerHTML = loginHtml
 
-    document.querySelector('.registry').addEventListener('click', () => {
-        renderReg()
-    })
+  document.querySelector('.registry').addEventListener('click', () => {
+    renderReg()
+  })
 
-    const loginEl = document.querySelector('#login')
-    const passwordEl = document.querySelector('#password')
-    const submitButtonEl = document.querySelector('.button-main')
+  const loginEl = document.querySelector('#login')
+  const passwordEl = document.querySelector('#password')
+  const submitButtonEl = document.querySelector('.button-main')
 
-    submitButtonEl.addEventListener('click', () => {
-        login(loginEl.value, passwordEl.value)
-            .then((response) => {
-                return response.json()
-            })
-            .then((data) => {
-                setToken(data.user.token)
-                setName(data.user.name)
-                fetchAndRenederComments()
-            })
-    })
+  submitButtonEl.addEventListener('click', () => {
+    login(loginEl.value, passwordEl.value)
+      .then((response) => {
+        return response.json()
+      })
+      .then((data) => {
 
+        setToken(data.user.token)
+        setName(data.user.name)
+        fetchAndRenederComments()
+      })
+      .catch((err) => {
+        console.error(err)
+        alert('Неверный логин или пароль')
+      })
+
+    if (!loginEl.value || !passwordEl.value) {
+      console.error('Введите Ваш Логин и пароль')
+      alert('Введите Ваш Логин и пароль')
+      return
+    }
+  })
 }
