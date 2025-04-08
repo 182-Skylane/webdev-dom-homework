@@ -54,8 +54,8 @@ export const initAddCommentListener = (renderComments) => {
         postComment(sanitizeHtml(text.value), sanitizeHtml(name.value)).then(
             (data) => {
 
-            document.querySelector('.form-loading').style.display = 'none'
-            document.querySelector('.add-form').style.display = 'flex'
+                document.querySelector('.form-loading').style.display = 'none'
+                document.querySelector('.add-form').style.display = 'flex'
 
                 updateComments(data)
                 renderComments()
@@ -81,9 +81,9 @@ export const initAddCommentListener = (renderComments) => {
                 text.classList.add('input-error')
 
                 setTimeout(() => {
-                name.classList.remove('input-error')
-                text.classList.remove('input-error')
-                },1500)
+                    name.classList.remove('input-error')
+                    text.classList.remove('input-error')
+                }, 1500)
             }
         })
     })
